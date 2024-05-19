@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #fdf6e3;
+            text-align: center;
+            position: relative;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
+        .photo {
+            width: 40%; /* Smaller size for the image */
+            margin: 10px auto;
+            position: relative;
+            display: none; /* Initially hide all photos */
+        }
+        img {
+            width: 100%;
+            height: auto;
+        }
+        .description {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            color: white;
+            font-weight: bold;
+            font-size: 36px; /* Larger font size */
+            padding: 10px 0;
+        }
+        .step-number {
+            position: relative;
+            top: 10px;
+            color: black;
+            font-weight: bold;
+            font-size: 30px; /* Step number font size */
+        }
+        #prevBtn, #nextBtn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 10px 20px;
+            font-size: 36px; /* Larger arrow size */
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #333;
+        }
+        #prevBtn {
+            left: 10px;
+        }
+        #nextBtn {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery">
+        <div class="photo" id="photo1">
+            <div class="description">COLLECT A SMALL SAMPLE OF STEM CELLS FROM A HEALTHY LIVING ANIMAL</div>
+            <img src="https://github.com/stevetao31/11/blob/main/53729937821_cea53d4b59_z.jpg?raw=true" alt="Collect a small sample of stem cells">
+            <div class="step-number">Step 1</div>
+        </div>
+        <div class="photo" id="photo2">
+            <div class="description">CELLS MULTIPLY AND MATURE IN A CULTIVATOR PROVIDED WITH WATER AND NUTRITION</div>
+            <img src="https://github.com/stevetao31/11/blob/main/53729937831_231903f3a6_z.jpg?raw=true" alt="Cells multiply and mature">
+            <div class="step-number">Step 2</div>
+        </div>
+        <div class="photo" id="photo3">
+            <div class="description">MEAT GROWS TO DESIRED SIZE AND IS HARVESTED</div>
+            <img src="https://github.com/stevetao31/11/blob/main/53730136923_8366cc9e12_z.jpg?raw=true" alt="Meat grows to desired size">
+            <div class="step-number">Step 3</div>
+        </div>
+        <div class="photo" id="photo4">
+            <div class="description">MAKE FOOD WITH CULTIVATED MEAT</div>
+            <img src="https://github.com/stevetao31/11/blob/main/53730272414_39e1199768_z.jpg?raw=true" alt="Make food with cultivated meat">
+            <div class="step-number">Step 4</div>
+        </div>
+    </div>
+    <button id="prevBtn">&#10094;</button> <!-- Changed to arrow symbols -->
+    <button id="nextBtn">&#10095;</button>
+
+    <script>
+        let currentPhoto = 1;
+        const totalPhotos = 4;
+        document.getElementById('photo' + currentPhoto).style.display = 'block'; // Initially show the first photo
+
+        function showPhoto(number) {
+            const photoToShow = document.getElementById('photo' + number);
+            document.querySelectorAll('.photo').forEach(photo => {
+                photo.style.display = 'none'; // Hide all photos
+            });
+            photoToShow.style.display = 'block'; // Show the selected photo
+        }
+
+        document.getElementById('prevBtn').addEventListener('click', function() {
+            if (currentPhoto > 1) {
+                currentPhoto--;
+                showPhoto(currentPhoto);
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', function() {
+            if (currentPhoto < totalPhotos) {
+                currentPhoto++;
+                showPhoto(currentPhoto);
+            }
+        });
+    </script>
+</body>
+</html>
