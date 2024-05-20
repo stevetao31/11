@@ -1,80 +1,168 @@
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background: #ffffff;
-        text-align: center;
-        position: relative;
-        height: 100vh;
-        overflow: hidden;
-    }
-    .gallery {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        width: 100%; /* Ensure gallery fills the body */
-    }
-    .embed-container {
-        position: relative;
-        height: 60vh; /* Use viewport height */
-        width: 80vw; /* Use viewport width */
-        margin: auto; /* Center align the container */
-    }
-    .photo {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        overflow: hidden; /* Hide overflow */
-    }
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain; /* Maintain aspect ratio without cropping */
-    }
-    .step-number, .description {
-        color: black;
-        font-weight: bold;
-    }
-    .step-number {
-        font-size: 4vw;
-    }
-    .description {
-        font-size: 3vw;
-        padding-top: 1vh;
-        padding-bottom: 1vh;
-    }
-    #prevBtn, #nextBtn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        padding: 10px 20px;
-        font-size: 5vw;
-        cursor: pointer;
-        background: none;
-        border: none;
-        color: #333;
-    }
-    #prevBtn {
-        left: 2vw;
-    }
-    #nextBtn {
-        right: 2vw;
-    }
-    @media (max-width: 768px) {
-        .embed-container {
-            width: 90vw;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embed Image Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+            text-align: center;
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .gallery {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        .photo {
+            width: 80%;
+            height: 60%;
+            margin: 0 auto;
+            position: relative;
+        }
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .step-number, .description {
+            width: 100%;
+            color: black;
+            font-weight: bold;
         }
         .step-number {
-            font-size: 5vw;
+            font-size: 4vw;
+            margin-bottom: 10px;
         }
         .description {
-            font-size: 4vw;
+            font-size: 3vw;
+            margin-top: 10px;
         }
         #prevBtn, #nextBtn {
-            font-size: 8vw;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 10px 20px;
+            font-size: 5vw;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #333;
         }
-    }
-</style>
+        #prevBtn {
+            left: 10px;
+        }
+        #nextBtn {
+            right: 10px;
+        }
+        @media (max-width: 768px) {
+            .photo {
+                width: 90%;
+            }
+            .step-number {
+                font-size: 6vw;
+            }
+            .description {
+                font-size: 4vw;
+            }
+            #prevBtn, #nextBtn {
+                font-size: 8vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery">
+        <div class="step-number" id="step-number">Step 1</div>
+        <div class="photo" id="photo">
+            <img id="photo-img" src="https://github.com/stevetao31/11/blob/main/1.jpg?raw=true" alt="">
+        </div>
+        <div class="description" id="description">Collect a small sample of stem cells from a healthy living animal</div>
+    </div>
+    <button id="prevBtn">&#10094;</button>
+    <button id="nextBtn">&#10095;</button>
+
+    <script>
+        const photos = [
+            {
+                step: "Step 1",
+                src: "https://github.com/stevetao31/11/blob/main/1.jpg?raw=true",
+                alt: "Collect a small sample of stem cells",
+                description: "Collect a small sample of stem cells from a healthy living animal"
+            },
+            {
+                step: "Step 2",
+                src: "https://github.com/stevetao31/11/blob/main/2.jpg?raw=true",
+                alt: "Cells multiply and mature",
+                description: "Cells multiply and mature in a cultivator provided with water and nutrition"
+            },
+            {
+                step: "Step 3",
+                src: "https://github.com/stevetao31/11/blob/main/3.jpg?raw=true",
+                alt: "Meat grows to desired size",
+                description: "Harvest the meat in the cultivator after it has grown to the desired size and characteristics"
+            },
+            {
+                step: "Step 4",
+                src: "https://github.com/stevetao31/11/blob/main/4.jpg?raw=true",
+                alt: "Make food with cultivated meat",
+                description: "Make food with cultivated meat"
+            }
+        ];
+
+        let currentPhoto = 0;
+
+        function showPhoto(index) {
+            const photo = photos[index];
+            document.getElementById('step-number').innerText = photo.step;
+            document.getElementById('photo-img').src = photo.src;
+            document.getElementById('photo-img').alt = photo.alt;
+            document.getElementById('description').innerText = photo.description;
+        }
+
+        document.getElementById('prevBtn').addEventListener('click', function() {
+            if (currentPhoto > 0) {
+                currentPhoto--;
+                showPhoto(currentPhoto);
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', function() {
+            if (currentPhoto < photos.length - 1) {
+                currentPhoto++;
+                showPhoto(currentPhoto);
+            }
+        });
+
+        // Show the first photo initially
+        showPhoto(currentPhoto);
+
+        // Parse URL parameters
+        function getQueryParams() {
+            const params = {};
+            const queryString = window.location.search.substring(1);
+            const queryArray = queryString.split('&');
+            queryArray.forEach(query => {
+                const [key, value] = query.split('=');
+                params[key] = decodeURIComponent(value);
+            });
+            return params;
+        }
+
+        // Set initial photo based on URL parameter (if exists)
+        const params = getQueryParams();
+        if (params.photoIndex && params.photoIndex >= 0 && params.photoIndex < photos.length) {
+            currentPhoto = parseInt(params.photoIndex, 10);
+            showPhoto(currentPhoto);
+        }
+    </script>
+</body>
+</html>
